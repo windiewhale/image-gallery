@@ -9,37 +9,51 @@ const mainComp = (component) => {
     return`
     <section class="landing">
         <nav>
-            <li>photo gallery</li>
-            <li>about</li>
-            <li>contact</li>
+            <h3>Humbert von Gikkingen</h3>
+            <a>photo gallery</a>
+            <a>about</a>
+            <a>contact</a>
         </nav>
         <div class="ellipse"></div>
         <div class="circle">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div class="bc"></div>
+            <div class="bc"></div>
+            <div class="bc"></div>
+            <div class="bc"></div>
+            <div class="bc"></div>
+            <div class="bc"></div>
         </div>
-        <h2>professimus</h2>
-        <h2>catismus</h2>
-        <p>amazing cat-pictures</p>
+        <h2>humbert</h2>
+        <h2>gikkingen</h2>
+        <p>amazing <br> cat-pictures</p>
     </section>
     <section class="bio">
-        <p>I have studied many philosophers and many cats. The wisdom of cats is infinitely superior.</p>
-        <div class="ellipse-two"></div>
+        <div>
+            <p>I have studied many philosophers and many cats.<br> The wisdom of cats is infinitely superior.</p>
+            <div class="ellipse-two"></div>
+        </div>
     </section>
     <section class="about">
+        <h1>about cats</h1>
         <p>Here goes some nice story of cats</p>
     </section>
-    <section id="photos">${component}</section>
+    <section id="photos">
+        <div>
+            <h1>photographs</h1>
+            ${component}
+        </div>
+    </section>
     <section class="upload">
-        <form>
-            <input type="file" name="filename">
-            <input type="text" name="title" placeholder="title of the photo">
-            <input type="text" name="name" placeholder="photographer's name">
-            <button>upload</button>
-        </form>
+        <div>
+            <h1>upload picture</h1>
+            <form>
+                <input type="file" name="filename">
+                <input type="text" name="title" placeholder="title of the photo">
+                <input type="text" name="date" placeholder="year of the photo">
+                <input type="text" name="name" placeholder="photographer's name">
+                <button id="up">upload</button>
+            </form>
+        </div>
     </section>
 
     `
@@ -51,16 +65,20 @@ const swiperComponent = (data, component) => {
         <div class="swiper-wrapper">
         ${data.map(img => component(img)).join("")}   
         </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
     </div>
     `
 }
 
-const swiperSlideComponent = ({filename, title, name}) => {
+const swiperSlideComponent = ({filename, title, name, date}) => {
     return `
     <div class="swiper-slide">
-        <h2>${title}</h2>
-        <h3>${name}</h3>
         <img src="/public/images/${filename}">
+        <div class="pic-data">
+            <h2>${title}</h2>
+            <h3>${name}, ${date}</h3>
+        </div>
     </div>
     `
 }
@@ -74,7 +92,12 @@ const loadEvent = async () => {
     root.insertAdjacentHTML("beforeend", mainComp(swiperComponent(result, swiperSlideComponent)))
 
     const swiper = new Swiper(".swiper", {
-        loop: true
+        loop: true,
+
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        }
     })
 }
 
