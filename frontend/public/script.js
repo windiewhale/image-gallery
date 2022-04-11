@@ -47,7 +47,7 @@ const mainComp = (component) => {
         <div>
             <h1>upload picture</h1>
             <form>
-                <input type="file" name="filename">
+                <input type="file" name="picture">
                 <input type="text" name="title" placeholder="title of the photo">
                 <input type="text" name="date" placeholder="year of the photo">
                 <input type="text" name="name" placeholder="photographer's name">
@@ -99,6 +99,39 @@ const loadEvent = async () => {
             prevEl: '.swiper-button-prev',
         }
     })
+
+    const formElement = document.querySelector("form")
+
+    formElement.addEventListener("submit", e => {
+        e.preventDefault();
+
+        const formData = new FormData()
+        formData.append("picture", e.target.querySelector(`input[name="picture"]`).files[0])
+        formData.append("title", e.target.querySelector(`input[name="title"]`).value)
+        formData.append("date", e.target.querySelector(`input[name="date"]`).value)
+        formData.append("name", e.target.querySelector(`input[name="name"]`).value)
+
+        const fetchSettings = {
+            method: "POST",
+            body: formData
+        }
+
+        fetch("/", fetchSettings) 
+            .then(async data => {
+                if (data.status === 200) {
+                    const res = await data.json()
+                   /*  e.target.outerHTML = `<img src="upload/${res.pictureName}">` */
+                   console.log(res.pictureName);
+                    console.dir(data);
+                }
+            })
+            .catch(error => {
+                e.target.outerHTML = "error";
+                console.dir(error)
+            })
+    })
+
+
 }
 
 window.addEventListener("load", loadEvent)
