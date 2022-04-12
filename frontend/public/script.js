@@ -10,9 +10,8 @@ const mainComp = (component) => {
     <section class="landing">
         <nav>
             <h3>Humbert von Gikkingen</h3>
-            <a>photo gallery</a>
-            <a>about</a>
-            <a>contact</a>
+            <a href="#photos">photo gallery</a>
+            <a href="#upload">upload photo</a>
         </nav>
         <div class="ellipse"></div>
         <div class="circle">
@@ -33,17 +32,13 @@ const mainComp = (component) => {
             <div class="ellipse-two"></div>
         </div>
     </section>
-    <section class="about">
-        <h1>about cats</h1>
-        <p>Here goes some nice story of cats</p>
-    </section>
     <section id="photos">
         <div>
             <h1>photographs</h1>
             ${component}
         </div>
     </section>
-    <section class="upload">
+    <section class="upload" id="upload">
         <div>
             <h1>upload picture</h1>
             <form>
